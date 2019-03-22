@@ -197,7 +197,7 @@ public class GBMModel extends SharedTreeModel<GBMModel, GBMModel.GBMParameters, 
       List<TreeSHAPPredictor<double[]>> treeSHAPs = new ArrayList<>(_model._output._ntrees);
       for (int treeIdx = 0; treeIdx < _model._output._ntrees; treeIdx++) {
         for (int treeClass = 0; treeClass < _model._output._treeKeys[treeIdx].length; treeClass++) {
-          if (_model._output._treeKeys[treeIdx] == null) {
+          if (_model._output._treeKeys[treeIdx][treeClass] == null) {
             continue;
           }
           SharedTreeSubgraph tree = _model.getSharedTreeSubgraph(treeIdx, treeClass);
