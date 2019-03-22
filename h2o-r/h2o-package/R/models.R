@@ -583,6 +583,44 @@ staged_predict_proba.H2OModel <- function(object, newdata, ...) {
 #' @export
 h2o.staged_predict_proba <- staged_predict_proba.H2OModel
 
+#' Predict feature contributions (Shapley values)
+#'
+#' FIXME
+#'
+#' @param object a fitted \linkS4class{H2OModel} object for which prediction is
+#'        desired
+#' @param newdata An H2OFrame object in which to look for
+#'        variables with which to predict.
+#' @param ... additional arguments to pass on.
+#' @return Returns an H2OFrame contain feature contributions for each input row.
+#' @seealso \code{\link{h2o.gbm}} and  \code{\link{h2o.randomForest}} for model
+#'          generation in h2o.
+#' @examples
+#' \donttest{
+#' library(h2o)
+#' h2o.init()
+#' prostate_path <- system.file("extdata", "prostate.csv", package = "h2o")
+#' prostate <- h2o.uploadFile(path = prostate_path)
+#' prostate_gbm <- h2o.gbm(3:9, "AGE", prostate)
+#' h2o.predict(prostate_gbm, prostate)
+#' h2o.predict_contributions(prostate_gbm, prostate)
+#' }
+#' @export
+predict_contributions.H2OModel <- function(object, newdata, ...) {
+    if (missing(newdata)) {
+        stop("predictions with a missing `newdata` argument is not implemented yet")
+    }
+
+    url <- paste0('Predictions/models/', object@model_id, '/frames/',  h2o.getId(newdata))
+    res <- .h2o.__remoteSend(url, method = "POST", predict_contributions=TRUE)
+    res <- res$predictions_frame
+    h2o.getFrame(res$name)
+}
+
+#' @rdname predict_contributions.H2OModel
+#' @export
+h2o.predict_contributions <- predict_contributions.H2OModel
+
 #' Model Performance Metrics in H2O
 #'
 #' Given a trained h2o model, compute its performance on the given

@@ -151,7 +151,6 @@ class ModelBase(backwards_compatible()):
                     data={"leaf_node_assignment": True, "leaf_node_assignment_type": type})
         return h2o.get_frame(j["predictions_frame"]["name"])
 
-
     def staged_predict_proba(self, test_data):
         """
         Predict class probabilities at each stage of an H2O Model (only GBM models).
@@ -170,6 +169,18 @@ class ModelBase(backwards_compatible()):
                     data={"predict_staged_proba": True})
         return h2o.get_frame(j["predictions_frame"]["name"])
 
+    def predict_contributions(self, test_data):
+        """
+        Predict feature contributions - Shapley values on an H2O Model (only GBM and XGBoost models).
+
+        :param H2OFrame test_data: Data on which to calculate contributions.
+
+        :returns: A new H2OFrame made of feature contributions.
+        """
+        if not isinstance(test_data, h2o.H2OFrame): raise ValueError("test_data must be an instance of H2OFrame")
+        j = h2o.api("POST /3/Predictions/models/%s/frames/%s" % (self.model_id, test_data.frame_id),
+                    data={"predict_contributions": True})
+        return h2o.get_frame(j["predictions_frame"]["name"])
 
     def predict(self, test_data, custom_metric = None, custom_metric_func = None):
         """
