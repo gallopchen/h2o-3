@@ -21,10 +21,6 @@ class ARFFParser extends CsvParser {
 
   ARFFParser(ParseSetup ps, Key jobKey) { super(ps, jobKey); }
 
-  @Override
-  protected byte[] nonDataLineMarkers() {
-    return NON_DATA_LINE_MARKERS;
-  }
 
   /** Try to parse the bytes as ARFF format  */
   static ParseSetup guessSetup(ByteVec bv, byte[] bits, byte sep, boolean singleQuotes, String[] columnNames, String[][] naStrings) {
