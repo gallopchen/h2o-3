@@ -6,7 +6,7 @@ source("../../../scripts/h2o-r-test-setup.R")
 test.GBM.contribs_vs_xgb <- function() {
     expect_true(require("xgboost"))
 
-    prostate_hex <- h2o.importFile("smalldata/prostate/prostate.csv")
+    prostate_hex <- h2o.importFile(locate("smalldata/prostate/prostate.csv"))
     prostate_hex <- prostate_hex[, c("VOL", "DPROS", "AGE")]
     prostate_r <- as.data.frame(prostate_hex)
 

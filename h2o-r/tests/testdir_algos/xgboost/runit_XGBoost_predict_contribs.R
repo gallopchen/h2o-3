@@ -6,7 +6,7 @@ source("../../../scripts/h2o-r-test-setup.R")
 test.XGBoost.predict_contribs <- function() {
     expect_true(require("xgboost"))
 
-    housing_hex <- h2o.importFile("smalldata/gbm_test/BostonHousing.csv")
+    housing_hex <- h2o.importFile(locate("smalldata/gbm_test/BostonHousing.csv"))
 
     # Train an H2O model
     h2o_model <- h2o.xgboost(training_frame = housing_hex, y = "medv", seed = 42)

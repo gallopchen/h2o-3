@@ -4,7 +4,7 @@ source("../../../scripts/h2o-r-test-setup.R")
 
 
 test.GBM.contribs_bernoulli <- function() {
-    prostate_hex <- h2o.importFile("smalldata/prostate/prostate.csv")
+    prostate_hex <- h2o.importFile(locate("smalldata/prostate/prostate.csv"))
     prostate_hex$CAPSULE <- as.factor(prostate_hex$CAPSULE) 
     
     gbm_model <- h2o.gbm(training_frame = prostate_hex, y = "CAPSULE")

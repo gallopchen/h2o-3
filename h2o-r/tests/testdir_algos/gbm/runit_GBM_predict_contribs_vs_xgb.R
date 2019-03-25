@@ -4,7 +4,7 @@ source("../../../scripts/h2o-r-test-setup.R")
 
 
 test.GBM.contribs_sanity_check <- function() {
-    housing_hex <- h2o.importFile("smalldata/gbm_test/BostonHousing.csv")
+    housing_hex <- h2o.importFile(locate("smalldata/gbm_test/BostonHousing.csv"))
 
     gbm_model <- h2o.gbm(training_frame = housing_hex, y = "medv", seed = 42)
 
